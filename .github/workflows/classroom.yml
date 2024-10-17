@@ -19,7 +19,7 @@ jobs:
       with:
         test-name: Q1
         setup-command: ''
-        command: python autograder.py -q q1
+        command: python autograder.py -q q1 --no-graphics
         input: ''
         expected-output: 'Question q1: 25/25'
         comparison-method: contains
@@ -31,7 +31,7 @@ jobs:
       with:
         test-name: Q2
         setup-command: ''
-        command: python autograder.py -q q2
+        command: python autograder.py -q q2 --no-graphics
         input: ''
         expected-output: 'Question q2: 15/15'
         comparison-method: contains
@@ -43,7 +43,7 @@ jobs:
       with:
         test-name: Q3
         setup-command: ''
-        command: python autograder.py  -q q3
+        command: python autograder.py  -q q3 --no-graphics
         input: ''
         expected-output: 'Question q3: 25/25'
         comparison-method: contains
@@ -55,7 +55,7 @@ jobs:
       with:
         test-name: Q4
         setup-command: ''
-        command: python autograder.py  -q q4
+        command: python autograder.py  -q q4 --no-graphics
         input: ''
         expected-output: 'Question q4: 10/10'
         comparison-method: contains
@@ -67,7 +67,7 @@ jobs:
       with:
         test-name: Q5
         setup-command: ''
-        command: python autograder.py  -q q5
+        command: python autograder.py  -q q5 --no-graphics
         input: ''
         expected-output: 'Question q5: 10/10'
         comparison-method: contains
@@ -79,7 +79,7 @@ jobs:
       with:
         test-name: Q6
         setup-command: ''
-        command: python autograder.py  -q q6
+        command: python autograder.py  -q q6 --no-graphics
         input: ''
         expected-output: 'Question q6: 15/15'
         comparison-method: contains
