@@ -13,6 +13,13 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+    # Configure python 3.10
+    - name: Configure Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+    - name: Install Tkinter for Ubuntu
+      run: sudo apt-get install python3-tk
     - name: Q1
       id: q1
       uses: classroom-resources/autograding-io-grader@v1
