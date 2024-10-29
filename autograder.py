@@ -12,15 +12,18 @@
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
 
-# imports from python standard library
-import grading
-import imp
+import importlib.machinery
+import importlib.util
 import optparse
 import os
+import random
 import re
 import sys
+
+# imports from python standard library
+import grading
 import projectParams
-import random
+
 random.seed(0)
 try:
     from pacman import GameState
@@ -122,25 +125,21 @@ def setModuleName(module, filename):
 
 #from cStringIO import StringIO
 
-def loadModuleString(moduleSource):
-    # Below broken, imp doesn't believe its being passed a file:
-    #    ValueError: load_module arg#2 should be a file or None
-    #
-    #f = StringIO(moduleCodeDict[k])
-    #tmp = imp.load_module(k, f, k, (".py", "r", imp.PY_SOURCE))
-    tmp = imp.new_module(k)
-    exec(moduleCodeDict[k], tmp.__dict__)
-    setModuleName(tmp, k)
+# Function to load a module from a string
+def loadModuleString(moduleName, moduleSource):
+    tmp = importlib.util.module_from_spec(importlib.util.spec_from_loader(moduleName, loader=None))
+    exec(moduleSource, tmp.__dict__)
+    sys.modules[moduleName] = tmp
     return tmp
 
 
-import py_compile
-
-
+# Function to load a module from a file
 def loadModuleFile(moduleName, filePath):
-    with open(filePath, 'r') as f:
-        return imp.load_module(moduleName, f, "%s.py" % moduleName, (".py", "r", imp.PY_SOURCE))
-
+    spec = importlib.util.spec_from_file_location(moduleName, filePath)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[moduleName] = module
+    spec.loader.exec_module(module)
+    return module
 
 def readFile(path, root=""):
     "Read file from disk at specified path and return as string"
@@ -202,8 +201,8 @@ def printTest(testDict, solutionDict):
 
 
 def runTest(testName, moduleDict, printTestCase=False, display=None):
-    import testParser
     import testClasses
+    import testParser
     for module in moduleDict:
         setattr(sys.modules[__name__], module, moduleDict[module])
 
@@ -258,8 +257,8 @@ def evaluate(generateSolutions, testRoot, moduleDict, exceptionMap=ERROR_HINT_MA
              printTestCase=False, questionToGrade=None, display=None):
     # imports of testbench code.  note that the testClasses import must follow
     # the import of student code due to dependencies
-    import testParser
     import testClasses
+    import testParser
     for module in moduleDict:
         setattr(sys.modules[__name__], module, moduleDict[module])
 
